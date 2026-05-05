@@ -246,7 +246,7 @@ export const QUESTIONS: Question[] = [
     title: "关于自然人行为能力的表述，以下哪项正确？",
     options: ["A. 自然人自出生时起就具备完全行为能力", "B. 18岁以下的未成年人没有民事行为能力", "C. 限制民事行为能力人可以独立实施所有法律行为", "D. 16岁以上且有劳动收入的未成年人视为完全民事行为能力人"],
     answer: "D", 
-    explanation: "16岁以上的未成年人，如果有独立劳动收入并以此为主要生活来源，可以视为完全民事行为能力人[span_0](start_span)[span_0](end_span)。",
+    explanation: "16岁以上的未成年人，如果有独立劳动收入并以此为主要生活来源，可以视为完全民事行为能力人。",
     source: "第17页"
   },
   {
@@ -254,7 +254,7 @@ export const QUESTIONS: Question[] = [
     title: "法人是否有权从事民事活动？",
     options: ["A. 法人不能从事民事活动", "B. 法人可以独立从事民事活动", "C. 法人只能由股东执行民事活动", "D. 法人不承担民事责任"],
     answer: "B", 
-    explanation: "法人具有独立的民事行为能力，能够从事与民事活动相关的各种事务[span_1](start_span)[span_1](end_span)。",
+    explanation: "法人具有独立的民事行为能力，能够从事与民事活动相关的各种事务。",
     source: "第11页"
   },
   {
@@ -262,7 +262,7 @@ export const QUESTIONS: Question[] = [
     title: "以下关于法的效力冲突的处理原则，哪项是正确的？",
     options: ["A. 新法优于旧法", "B. 地方性法规优于国家法律", "C. 法律之间的冲突无解", "D. 行政法规不受宪法的限制"],
     answer: "A", 
-    explanation: "法的效力冲突时，通常新法优于旧法，确保法律的更新和适用性[span_2](start_span)[span_2](end_span)。",
+    explanation: "法的效力冲突时，通常新法优于旧法，确保法律的更新和适用性。",
     source: "第15页"
   },
   {
@@ -270,7 +270,7 @@ export const QUESTIONS: Question[] = [
     title: "以下哪些行为属于法律行为？",
     options: ["A. 签订协议", "B. 自然灾害", "C. 社会事件", "D. 自由表达意见"],
     answer: "A", 
-    explanation: "签订协议是一个法律行为，它直接涉及双方意图并产生法律后果[span_3](start_span)[span_3](end_span)。",
+    explanation: "签订协议是一个法律行为，它直接涉及双方意图并产生法律后果。",
     source: "第9页"
   },
   {
@@ -278,7 +278,7 @@ export const QUESTIONS: Question[] = [
     title: "法律责任中的刑事责任，以下哪项是正确的？",
     options: ["A. 仅仅限于监禁", "B. 可以通过罚款、拘留等形式执行", "C. 刑事责任只适用于法人", "D. 仅对自然人适用"],
     answer: "B", 
-    explanation: "刑事责任包括多种形式，如罚款、拘留、有期徒刑等，视罪行严重程度而定[span_4](start_span)[span_4](end_span)。",
+    explanation: "刑事责任包括多种形式，如罚款、拘留、有期徒刑等，视罪行严重程度而定。",
     source: "第21页"
   },
   {
@@ -286,7 +286,7 @@ export const QUESTIONS: Question[] = [
     title: "下列哪项属于刑事责任的附加刑？",
     options: ["A. 管制", "B. 判处死刑", "C. 拘役", "D. 判处无期徒刑"],
     answer: "A", 
-    explanation: "附加刑包括罚金、剥夺政治权利等，管制是附加刑之一[span_5](start_span)[span_5](end_span)。",
+    explanation: "附加刑包括罚金、剥夺政治权利等，管制是附加刑之一。",
     source: "第21页"
   },
   {
@@ -294,7 +294,7 @@ export const QUESTIONS: Question[] = [
     title: "法律行为的主要特征是：",
     options: ["A. 必须是书面形式", "B. 需要双方意图一致", "C. 必须带有约束力", "D. 仅限于合同签订"],
     answer: "B", 
-    explanation: "法律行为的特征之一是双方的意图一致，这样才会产生法律后果[span_6](start_span)[span_6](end_span)。",
+    explanation: "法律行为的特征之一是双方的意图一致，这样才会产生法律后果。",
     source: "第9页"
   },
   {
@@ -302,7 +302,7 @@ export const QUESTIONS: Question[] = [
     title: "法人清算的过程不包括以下哪项？",
     options: ["A. 清算期内不得进行与清算无关的活动", "B. 清算时需要处理法人所有的债务", "C. 清算期内法人继续从事新业务", "D. 清算结束时法人终止"],
     answer: "C", 
-    explanation: "法人清算期间不得从事与清算无关的活动[span_7](start_span)[span_7](end_span)。",
+    explanation: "法人清算期间不得从事与清算无关的活动。",
     source: "第29页"
   },
   {
@@ -310,7 +310,7 @@ export const QUESTIONS: Question[] = [
     title: "法律责任不包括以下哪项？",
     options: ["A. 行政责任", "B. 民事责任", "C. 刑事责任", "D. 司法责任"],
     answer: "D", 
-    explanation: "司法责任并不是法律责任的一部分，法律责任包括行政、民事和刑事责任[span_8](start_span)[span_8](end_span)。",
+    explanation: "司法责任并不是法律责任的一部分，法律责任包括行政、民事和刑事责任。",
     source: "第19页"
   },
   {
@@ -318,7 +318,7 @@ export const QUESTIONS: Question[] = [
     title: "法的渊源包括哪些？",
     options: ["A. 法院判决", "B. 宪法和法律", "C. 法律行为", "D. 行政处分"],
     answer: "B", 
-    explanation: "法的渊源包括宪法、法律、行政法规等。法院判决不属于法的渊源[span_9](start_span)[span_9](end_span)。",
+    explanation: "法的渊源包括宪法、法律、行政法规等。法院判决不属于法的渊源。",
     source: "第6页"
   },
   {
@@ -326,7 +326,7 @@ export const QUESTIONS: Question[] = [
     title: "法律行为的主要特征是什么？",
     options: ["A. 必须通过书面形式进行", "B. 需要当事人之间的意志表示一致", "C. 必须带有财产转移", "D. 必须受到政府批准"],
     answer: "B", 
-    explanation: "法律行为的核心特征是当事人之间的意志表示一致，即双方自愿同意的行为才会产生法律后果[span_10](start_span)[span_10](end_span)。",
+    explanation: "法律行为的核心特征是当事人之间的意志表示一致，即双方自愿同意的行为才会产生法律后果。",
     source: "第9页"
   },
   {
@@ -334,7 +334,7 @@ export const QUESTIONS: Question[] = [
     title: "以下关于法定代表人的责任，哪项描述正确？",
     options: ["A. 法定代表人不承担民事责任", "B. 法定代表人因执行职务而导致的损害，由法人承担责任", "C. 法定代表人执行职务所产生的责任完全由自己承担", "D. 法定代表人行为无关紧要，不需要承担责任"],
     answer: "B", 
-    explanation: "法定代表人在执行职务时产生的法律后果一般由法人承担，法人作为法律主体对外承担责任[span_11](start_span)[span_11](end_span)。",
+    explanation: "法定代表人在执行职务时产生的法律后果一般由法人承担，法人作为法律主体对外承担责任。",
     source: "第11页"
   },
   {
@@ -342,7 +342,7 @@ export const QUESTIONS: Question[] = [
     title: "法律责任中的民事责任，以下哪项是正确的？",
     options: ["A. 仅包括违约责任", "B. 包括停止侵害、返还财产等", "C. 仅适用于法人", "D. 仅适用于违反行政法规的行为"],
     answer: "B", 
-    explanation: "民事责任包括停止侵害、返还财产、赔偿损失等多种形式，目的是保护个体的合法权益[span_12](start_span)[span_12](end_span)。",
+    explanation: "民事责任包括停止侵害、返还财产、赔偿损失等多种形式，目的是保护个体的合法权益。",
     source: "第19页"
   },
   {
@@ -350,7 +350,7 @@ export const QUESTIONS: Question[] = [
     title: "法人解散后的处理流程是什么？",
     options: ["A. 法人解散后，立即终止所有责任", "B. 法人解散后进入清算程序，清算结束后法人终止", "C. 法人解散后不需要进行清算", "D. 法人解散后继续开展所有业务，直至正式终止"],
     answer: "B", 
-    explanation: "法人解散后，必须进入清算程序，清算结束后，法人才会正式终止。清算过程包括清偿债务和分配剩余资产[span_13](start_span)[span_13](end_span)。",
+    explanation: "法人解散后，必须进入清算程序，清算结束后，法人才会正式终止。清算过程包括清偿债务和分配剩余资产。",
     source: "第29页"
   },
   {
@@ -358,7 +358,7 @@ export const QUESTIONS: Question[] = [
     title: "法的效力冲突时，以下哪项处理原则是正确的？",
     options: ["A. 新法优于旧法", "B. 上位法优于下位法", "C. 特别法优于一般法", "D. 以上都正确"],
     answer: "D", 
-    explanation: "法的效力冲突时，通常采用新法优于旧法、上位法优于下位法、特别法优于一般法等处理原则[span_14](start_span)[span_14](end_span)。",
+    explanation: "法的效力冲突时，通常采用新法优于旧法、上位法优于下位法、特别法优于一般法等处理原则。",
     source: "第15页"
   },
   {
@@ -366,7 +366,7 @@ export const QUESTIONS: Question[] = [
     title: "关于法人责任的描述，哪项是正确的？",
     options: ["A. 法人只能承担有限责任", "B. 法人不具有民事行为能力", "C. 法人不能承担刑事责任", "D. 法人可以承担民事责任和刑事责任"],
     answer: "D", 
-    explanation: "法人作为法律主体，可以承担民事责任和刑事责任[span_15](start_span)[span_15](end_span)。",
+    explanation: "法人作为法律主体，可以承担民事责任和刑事责任。",
     source: "第11页"
   },
   {
@@ -374,7 +374,7 @@ export const QUESTIONS: Question[] = [
     title: "法定代表人在职务行为中承担责任的方式是？",
     options: ["A. 仅由法人承担所有责任", "B. 法定代表人个人承担责任", "C. 法定代表人和法人共同承担责任", "D. 法定代表人不承担责任"],
     answer: "A", 
-    explanation: "法定代表人在执行职务时发生的侵权行为，一般由法人承担责任，法定代表人不直接承担责任[span_16](start_span)[span_16](end_span)。",
+    explanation: "法定代表人在执行职务时发生的侵权行为，一般由法人承担责任，法定代表人不直接承担责任。",
     source: "第11页"
   },
   {
@@ -382,7 +382,7 @@ export const QUESTIONS: Question[] = [
     title: "法人的责任在什么情况下可以由股东承担？",
     options: ["A. 法人破产时", "B. 法人没有参与任何违法行为时", "C. 法人只对外承担责任时", "D. 法人的债务完全由股东个人负责"],
     answer: "A", 
-    explanation: "法人在破产时，股东可能需要承担一定责任，尤其是当法人资产不足以偿还债务时，股东可能会面临责任追偿[span_17](start_span)[span_17](end_span)。",
+    explanation: "法人在破产时，股东可能需要承担一定责任，尤其是当法人资产不足以偿还债务时，股东可能会面临责任追偿。",
     source: "第11页"
   },
   {
@@ -390,7 +390,7 @@ export const QUESTIONS: Question[] = [
     title: "下列关于非法人组织的描述，哪项是正确的？",
     options: ["A. 非法人组织具有独立的法人资格", "B. 非法人组织不能从事民事行为", "C. 非法人组织的债务由出资人或设立人承担", "D. 非法人组织的财产不用于清偿债务"],
     answer: "C", 
-    explanation: "非法人组织的债务通常由出资人或设立人承担无限责任[span_18](start_span)[span_18](end_span)。",
+    explanation: "非法人组织的债务通常由出资人或设立人承担无限责任。",
     source: "第13页"
   },
   {
@@ -398,7 +398,7 @@ export const QUESTIONS: Question[] = [
     title: "法律责任不包括哪些内容？",
     options: ["A. 行政责任", "B. 民事责任", "C. 刑事责任", "D. 司法责任"],
     answer: "D", 
-    explanation: "司法责任通常指的是法院或司法人员在职责范围内的责任，而法律责任包括行政责任、民事责任和刑事责任[span_19](start_span)[span_19](end_span)。",
+    explanation: "司法责任通常指的是法院或司法人员在职责范围内的责任，而法律责任包括行政责任、民事责任和刑事责任。",
     source: "第19页"
   },
   // 填空题 51-100
