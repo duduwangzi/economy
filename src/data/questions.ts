@@ -1,3 +1,5 @@
+import { Question, QuestionType } from '../types';
+
 export const QUESTIONS: Question[] = [
   {
     id: 1, type: QuestionType.MULTIPLE_CHOICE,
