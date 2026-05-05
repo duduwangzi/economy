@@ -556,8 +556,7 @@ export default function App() {
                             <span className="w-px h-6 bg-zinc-800"></span>
                             <div className="flex items-center gap-4 lg:gap-6 shrink-0">
                                 <div className="flex flex-col gap-1.5 justify-center min-w-[100px] lg:min-w-[150px]">
-                                    <div className="flex items-center justify-between">
-                                         <span className="text-[10px] text-zinc-600 font-mono uppercase tracking-tighter">PROGRESS</span>
+                                    <div className="flex items-center justify-end">
                                          <span className="text-xs text-amber-500 font-mono font-bold leading-none">{Math.round(((quizState.currentQuestionIndex + 1) / quizState.questions.length) * 100)}%</span>
                                     </div>
                                     <div className="w-full h-1.5 bg-zinc-800 rounded-full overflow-hidden">
