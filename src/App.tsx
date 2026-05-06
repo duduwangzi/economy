@@ -688,9 +688,6 @@ export default function App() {
                             <div className="flex items-center gap-2 lg:gap-6 shrink-0">
                                 <div className="flex flex-col gap-1.5 justify-center min-w-[70px] lg:min-w-[150px]">
                                     <div className="flex items-center justify-between lg:justify-end gap-2">
-                                         <span className="text-[9px] text-zinc-600 font-mono font-bold xs:hidden">
-                                           {quizState.currentQuestionIndex + 1}/{quizState.questions.length}
-                                         </span>
                                          <span className="text-[10px] text-amber-500 font-mono font-bold leading-none">
                                             {quizState.questions.length > 0 ? Math.round(((quizState.currentQuestionIndex + 1) / quizState.questions.length) * 100) : 0}%
                                          </span>
