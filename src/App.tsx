@@ -209,7 +209,7 @@ export default function App() {
   };
 
   const renderHome = () => (
-    <div className="flex-1 flex flex-col items-center justify-center px-6 sm:px-12 py-8 lg:py-20 overflow-y-auto">
+    <div className="flex-1 flex flex-col items-center justify-center px-4 sm:px-12 py-8 lg:py-20 overflow-y-auto">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -229,9 +229,9 @@ export default function App() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-8 w-full max-w-6xl pb-10">
         {[
-          { id: 'practice', title: '随机刷题', icon: BookOpen, color: 'text-amber-500', desc: '题库随机练习，支持即时解析' },
-          { id: 'exam', title: '模拟考试', icon: GraduationCap, color: 'text-emerald-500', desc: '随机50题，30分钟限时挑战考试' },
-          { id: 'errors', title: '错题本', icon: ClipboardList, color: 'text-rose-500', desc: `精选错题集中温习 (${errorIds.length} 道)` }
+          { id: 'practice', title: '随机刷题', icon: BookOpen, color: 'text-amber-500', desc: `题库随机练习，包含全库 ${QUESTIONS.length} 题` },
+          { id: 'exam', title: '模拟考试', icon: GraduationCap, color: 'text-emerald-500', desc: '基于考试大纲随机50题，30分钟限时挑战' },
+          { id: 'errors', title: '错题本', icon: ClipboardList, color: 'text-rose-500', desc: `错题精选温习，目前已有 ${errorIds.length} 道` }
         ].map((mode, index) => (
           <motion.button
             key={mode.id}
@@ -265,7 +265,7 @@ export default function App() {
 
     return (
       <div className="flex-1 flex flex-col h-full">
-        <div className="flex-1 p-6 lg:p-12 overflow-y-auto">
+        <div className="flex-1 p-4 lg:p-12 overflow-y-auto">
           <div className="max-w-3xl mx-auto w-full">
             <div className="flex items-center justify-between mb-6 lg:mb-8">
                <div className="flex items-center gap-4">
@@ -369,7 +369,7 @@ export default function App() {
                       onKeyDown={(e) => {
                         if (e.key === 'Enter') handleAnswerChange((e.target as HTMLInputElement).value.trim());
                       }}
-                      className={`flex-1 p-3.5 sm:p-5 text-sm sm:text-base rounded-xl border bg-zinc-900 text-white outline-none transition-all ${isAnswered ? (isCorrect ? 'border-emerald-500' : 'border-rose-500') : 'border-zinc-800 focus:border-amber-500'}`}
+                      className={`flex-1 p-2.5 sm:p-4 text-xs sm:text-base rounded-xl border bg-zinc-900 text-white outline-none transition-all ${isAnswered ? (isCorrect ? 'border-emerald-500' : 'border-rose-500') : 'border-zinc-800 focus:border-amber-500'}`}
                     />
                     {!isAnswered && (
                        <button 
@@ -377,7 +377,7 @@ export default function App() {
                             const input = document.querySelector('input') as HTMLInputElement;
                             if (input) handleAnswerChange(input.value.trim());
                         }}
-                        className="px-5 sm:px-8 bg-amber-500 text-black rounded-xl font-bold text-sm sm:text-base hover:bg-amber-600 transition-colors"
+                        className="px-4 sm:px-8 bg-amber-500 text-black rounded-xl font-bold text-xs sm:text-base hover:bg-amber-600 transition-colors"
                        >
                          提交
                        </button>
@@ -396,7 +396,7 @@ export default function App() {
                 initial={{ y: 100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: 100, opacity: 0 }}
-                className="mx-4 lg:mx-8 mb-4 lg:mb-8 p-6 lg:p-8 rounded-2xl bg-zinc-900 border border-zinc-800 shadow-2xl flex flex-col lg:flex-row gap-6 lg:gap-10 items-start z-40"
+                className="mx-2 lg:mx-8 mb-2 lg:mb-8 p-4 lg:p-8 rounded-2xl bg-zinc-900 border border-zinc-800 shadow-2xl flex flex-col lg:flex-row gap-4 lg:gap-10 items-start z-40"
              >
                 <div className="flex-1 w-full">
                   <div className="flex items-center gap-3 mb-3 lg:mb-4">
@@ -704,7 +704,7 @@ export default function App() {
                                         />
                                     </div>
                                 </div>
-                                <span className="text-[10px] lg:text-sm text-zinc-400 font-mono font-medium hidden xs:inline whitespace-nowrap">
+                                <span className="text-[10px] lg:text-sm text-zinc-400 font-mono font-medium whitespace-nowrap">
                                     <span className="text-zinc-100">{quizState.currentQuestionIndex + 1}</span> <span className="text-zinc-700 mx-0.5">/</span> {quizState.questions.length}
                                 </span>
                             </div>
