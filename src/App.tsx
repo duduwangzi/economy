@@ -5,7 +5,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { BookOpen, GraduationCap, ClipboardList, CheckCircle2, XCircle, Clock, RotateCcw, ChevronRight, Home, LayoutList, Trash2 } from 'lucide-react';
+import { BookOpen, GraduationCap, ClipboardList, CheckCircle2, XCircle, Clock, RotateCcw, ChevronRight, Home, LayoutList, Trash2, LayoutGrid, Menu } from 'lucide-react';
 import { Question, QuestionType, QuizState } from './types';
 import { QUESTIONS } from './data/questions';
 
@@ -18,6 +18,7 @@ export default function App() {
     const saved = localStorage.getItem('mistake_notebook');
     return saved ? JSON.parse(saved) : [];
   });
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [selectedTypes, setSelectedTypes] = useState<QuestionType[]>([
     QuestionType.MULTIPLE_CHOICE,
     QuestionType.FILL_IN,
@@ -74,6 +75,19 @@ export default function App() {
     return source.filter(q => selectedTypes.includes(q.type));
   };
 
+  const navigateTo = (newView: 'home' | 'practice' | 'exam' | 'errors') => {
+    setIsMobileMenuOpen(false);
+    if (newView === 'home') {
+      setView('home');
+      setQuizState(null);
+      return;
+    }
+
+    if (newView === 'practice') startPractice();
+    else if (newView === 'exam') startExam();
+    else if (newView === 'errors') startErrorReview();
+  };
+
   const startPractice = () => {
     const filtered = getFilteredQuestions(QUESTIONS);
     if (filtered.length === 0) {
@@ -81,6 +95,7 @@ export default function App() {
       return;
     }
     const shuffled = [...filtered].sort(() => Math.random() - 0.5);
+    setShowExplanation(false);
     setQuizState({
       currentQuestionIndex: 0,
       questions: shuffled,
@@ -89,7 +104,6 @@ export default function App() {
       startTime: Date.now(),
       mistakes: []
     });
-    setShowExplanation(false);
     setView('practice');
   };
 
@@ -100,6 +114,8 @@ export default function App() {
       return;
     }
     const shuffled = [...filtered].sort(() => Math.random() - 0.5).slice(0, 50);
+    setShowExplanation(false);
+    setTimeRemaining(1800);
     setQuizState({
       currentQuestionIndex: 0,
       questions: shuffled,
@@ -108,18 +124,21 @@ export default function App() {
       startTime: Date.now(),
       mistakes: []
     });
-    setTimeRemaining(1800);
-    setShowExplanation(false);
     setView('exam');
   };
 
   const startErrorReview = () => {
-    const errorQuestions = QUESTIONS.filter(q => errorIds.includes(q.id));
+    // Ensure ids are compared as numbers
+    const validIds = errorIds.map(id => Number(id));
+    const errorQuestions = QUESTIONS.filter(q => validIds.includes(Number(q.id)));
     const filtered = getFilteredQuestions(errorQuestions);
+    
     if (filtered.length === 0) {
-      alert("所选题型中没有错题哦！");
+      alert(errorIds.length === 0 ? "目前还没有错题收录哦！" : "所选题型中没有错题哦！");
       return;
     }
+
+    setShowExplanation(false);
     setQuizState({
       currentQuestionIndex: 0,
       questions: filtered,
@@ -128,7 +147,6 @@ export default function App() {
       startTime: Date.now(),
       mistakes: []
     });
-    setShowExplanation(false);
     setView('errors');
   };
 
@@ -191,48 +209,48 @@ export default function App() {
   };
 
   const renderHome = () => (
-    <div className="flex flex-col items-center justify-center min-h-full px-8 py-12">
+    <div className="flex-1 flex flex-col items-center justify-center px-6 sm:px-12 py-8 lg:py-20 overflow-y-auto">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-16"
+        className="text-center mb-10 sm:mb-20"
       >
-        <h1 className="text-6xl lg:text-8xl font-serif text-white mb-8 tracking-tighter italic leading-none">
+        <h1 className="text-4xl sm:text-7xl lg:text-9xl font-black text-white mb-5 lg:mb-10 tracking-tighter italic leading-none">
           经济法<span className="text-amber-500 not-italic">.</span>题库
         </h1>
-        <div className="flex items-center justify-center gap-4 mb-4">
-          <div className="h-px w-8 bg-zinc-800" />
-          <p className="text-zinc-500 text-[10px] lg:text-xs uppercase tracking-[0.4em] font-bold">
+        <div className="flex items-center justify-center gap-3">
+          <div className="h-px w-4 sm:w-12 bg-zinc-800" />
+          <p className="text-zinc-500 text-[8px] sm:text-xs uppercase tracking-[0.4em] font-bold">
              精选题目 · 助力专业复习
           </p>
-          <div className="h-px w-8 bg-zinc-800" />
+          <div className="h-px w-4 sm:w-12 bg-zinc-800" />
         </div>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-8 w-full max-w-6xl pb-10">
         {[
-          { id: 'practice', title: '随机刷题', icon: BookOpen, color: 'text-amber-500', desc: '题库随机练习，支持即时解析', action: startPractice },
-          { id: 'exam', title: '模拟考试', icon: GraduationCap, color: 'text-emerald-500', desc: '随机50题，30分钟限时挑战考试', action: startExam },
-          { id: 'errors', title: '错题本', icon: ClipboardList, color: 'text-rose-500', desc: `精选错题集中温习 (${errorIds.length} 道)`, action: startErrorReview },
+          { id: 'practice', title: '随机刷题', icon: BookOpen, color: 'text-amber-500', desc: '题库随机练习，支持即时解析' },
+          { id: 'exam', title: '模拟考试', icon: GraduationCap, color: 'text-emerald-500', desc: '随机50题，30分钟限时挑战考试' },
+          { id: 'errors', title: '错题本', icon: ClipboardList, color: 'text-rose-500', desc: `精选错题集中温习 (${errorIds.length} 道)` }
         ].map((mode, index) => (
           <motion.button
             key={mode.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            onClick={mode.action}
-            className="flex flex-col items-start p-8 bg-zinc-900/50 rounded-2xl border border-zinc-800 hover:border-amber-500/50 transition-all group text-left relative overflow-hidden"
+            onClick={() => navigateTo(mode.id as any)}
+            className="flex flex-col items-start p-7 sm:p-10 bg-zinc-900/40 rounded-3xl border border-zinc-800/60 hover:border-amber-500/50 transition-all group text-left relative overflow-hidden"
           >
-            <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-               <mode.icon size={80} />
+            <div className="absolute -top-4 -right-4 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+               <mode.icon size={120} />
             </div>
-            <div className={`p-3 rounded-lg bg-zinc-800 ${mode.color} mb-6 group-hover:bg-amber-500 group-hover:text-black transition-all`}>
-              <mode.icon size={24} />
+            <div className={`p-4 rounded-2xl bg-zinc-800/80 ${mode.color} mb-8 sm:mb-10 group-hover:bg-amber-500 group-hover:text-black transition-all shadow-lg`}>
+              <mode.icon size={28} />
             </div>
-            <h2 className="text-2xl font-semibold text-white mb-3 tracking-tight">{mode.title}</h2>
-            <p className="text-zinc-500 text-sm leading-relaxed mb-6">{mode.desc}</p>
-            <div className="mt-auto flex items-center gap-2 text-amber-500 font-bold text-sm">
-              进入模式 <ChevronRight size={16} />
+            <h2 className="text-xl sm:text-2xl font-black text-white mb-3 tracking-tight">{mode.title}</h2>
+            <p className="text-zinc-500 text-xs sm:text-sm leading-relaxed mb-8">{mode.desc}</p>
+            <div className="mt-auto flex items-center gap-2 text-amber-500 font-black text-[10px] sm:text-xs uppercase tracking-widest">
+              进入模式 <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
             </div>
           </motion.button>
         ))}
@@ -265,8 +283,8 @@ export default function App() {
                )}
             </div>
 
-            <h2 className="text-2xl lg:text-3xl font-serif text-white leading-relaxed mb-8 lg:mb-12">
-              <span className="text-amber-500 mr-3 lg:mr-4">{state.questions.findIndex(question => question.id === q.id) + 1}.</span>
+            <h2 className="text-lg sm:text-2xl lg:text-3xl font-serif text-white leading-relaxed mb-8 lg:mb-12">
+              <span className="text-amber-500 mr-2 sm:mr-4">{state.questions.findIndex(question => question.id === q.id) + 1}.</span>
               {q.title}
             </h2>
 
@@ -298,12 +316,12 @@ export default function App() {
                     key={opt}
                     disabled={isAnswered}
                     onClick={() => handleAnswerChange(letter)}
-                    className={`w-full group flex items-center text-left p-5 rounded-xl border transition-all ${borderStyle} relative`}
+                    className={`w-full group flex items-center text-left p-4 sm:p-5 rounded-xl border transition-all ${borderStyle} relative`}
                   >
-                    <span className={`w-8 h-8 rounded border flex items-center justify-center mr-4 font-mono transition-all shrink-0 ${circleStyle} group-hover:bg-amber-500 group-hover:text-black group-hover:border-amber-500`}>
+                    <span className={`w-7 h-7 sm:w-8 sm:h-8 rounded border flex items-center justify-center mr-3 sm:mr-4 font-mono text-sm sm:text-base transition-all shrink-0 ${circleStyle} group-hover:bg-amber-500 group-hover:text-black group-hover:border-amber-500`}>
                       {letter}
                     </span>
-                    <span className={`text-zinc-300 transition-colors ${isSelected ? 'text-white font-medium' : ''}`}>{optText}</span>
+                    <span className={`text-xs sm:text-sm lg:text-base text-zinc-300 transition-colors ${isSelected ? 'text-white font-medium' : ''}`}>{optText}</span>
                     {isSelected && (
                         <div className="absolute right-5">
                             {isCorrect ? <CheckCircle2 size={20} className="text-emerald-500" /> : <XCircle size={20} className="text-rose-500" />}
@@ -351,7 +369,7 @@ export default function App() {
                       onKeyDown={(e) => {
                         if (e.key === 'Enter') handleAnswerChange((e.target as HTMLInputElement).value.trim());
                       }}
-                      className={`flex-1 p-5 rounded-xl border bg-zinc-900 text-white outline-none transition-all ${isAnswered ? (isCorrect ? 'border-emerald-500' : 'border-rose-500') : 'border-zinc-800 focus:border-amber-500'}`}
+                      className={`flex-1 p-3.5 sm:p-5 text-sm sm:text-base rounded-xl border bg-zinc-900 text-white outline-none transition-all ${isAnswered ? (isCorrect ? 'border-emerald-500' : 'border-rose-500') : 'border-zinc-800 focus:border-amber-500'}`}
                     />
                     {!isAnswered && (
                        <button 
@@ -359,9 +377,9 @@ export default function App() {
                             const input = document.querySelector('input') as HTMLInputElement;
                             if (input) handleAnswerChange(input.value.trim());
                         }}
-                        className="px-8 bg-amber-500 text-black rounded-xl font-bold hover:bg-amber-600 transition-colors"
+                        className="px-5 sm:px-8 bg-amber-500 text-black rounded-xl font-bold text-sm sm:text-base hover:bg-amber-600 transition-colors"
                        >
-                         提交答案
+                         提交
                        </button>
                     )}
                   </div>
@@ -399,35 +417,14 @@ export default function App() {
                     onClick={nextQuestion}
                     className="w-full bg-white text-black text-sm lg:text-base font-bold py-3 lg:py-4 rounded-xl hover:bg-amber-500 transition-colors flex items-center justify-center gap-2"
                   >
-                    下一题 <ChevronRight size={18} />
+                    {quizState && quizState.currentQuestionIndex === quizState.questions.length - 1 && view === 'exam' ? '提交并查看成绩' : '下一题'} <ChevronRight size={18} />
                   </button>
                 </div>
              </motion.section>
           )}
         </AnimatePresence>
 
-        {!showExplanation && view === 'exam' && (
-             <div className="px-8 pb-8 flex justify-end">
-                <div className="flex gap-4">
-                    <button
-                        onClick={() => {
-                            if (state.currentQuestionIndex > 0) {
-                                setQuizState({...state, currentQuestionIndex: state.currentQuestionIndex - 1});
-                            }
-                        }}
-                        className="px-6 py-3 border border-zinc-800 rounded-xl text-zinc-400 font-medium hover:bg-zinc-900 transition-colors"
-                    >
-                        上一题
-                    </button>
-                    <button
-                        onClick={nextQuestion}
-                        className="px-8 py-3 bg-white text-black rounded-xl font-bold hover:bg-amber-500 transition-colors shadow-lg"
-                    >
-                        {state.currentQuestionIndex === state.questions.length - 1 ? '提交试卷' : '下一题'}
-                    </button>
-                </div>
-             </div>
-        )}
+
       </div>
     );
   };
@@ -531,13 +528,13 @@ export default function App() {
           
           <nav className="space-y-2">
             {[
-              { id: 'practice', title: '随机刷题', icon: BookOpen, action: startPractice },
-              { id: 'exam', title: '模拟考试', icon: GraduationCap, action: startExam },
-              { id: 'errors', title: '错题本', icon: ClipboardList, action: startErrorReview },
+              { id: 'practice', title: '随机刷题', icon: BookOpen },
+              { id: 'exam', title: '模拟考试', icon: GraduationCap },
+              { id: 'errors', title: '错题本', icon: ClipboardList },
             ].map((btn) => (
               <button
                 key={btn.id}
-                onClick={btn.action}
+                onClick={() => navigateTo(btn.id as any)}
                 className={`w-full flex items-center gap-4 px-5 py-4 rounded-xl transition-all font-medium ${view === btn.id ? 'bg-zinc-800 text-white shadow-xl border border-zinc-700/50 translate-x-1' : 'text-zinc-500 hover:text-zinc-200 hover:bg-zinc-900'}`}
               >
                 <btn.icon size={20} className={view === btn.id ? 'text-amber-500' : 'opacity-40'} />
@@ -581,82 +578,165 @@ export default function App() {
         </div>
       </aside>
 
-      {/* Mobile Top Header */}
-      <div className="lg:hidden flex items-center justify-between p-4 border-b border-zinc-800 bg-[#0c0c0e]">
-        <div className="flex items-center gap-2 cursor-pointer" onClick={() => setView('home')}>
-          <div className="w-8 h-8 bg-amber-500 rounded-lg flex items-center justify-center text-black font-black">
-            <GraduationCap size={18} />
+      {/* Mobile Header */}
+      <header className="lg:hidden h-14 border-b border-zinc-800 bg-[#09090b]/80 backdrop-blur-md flex items-center justify-center px-4 shrink-0">
+        <div className="flex items-center gap-2" onClick={() => setView('home')}>
+          <div className="w-7 h-7 bg-amber-500 rounded flex items-center justify-center text-black shadow-lg shadow-amber-500/10">
+            <GraduationCap size={16} />
           </div>
-          <span className="font-bold text-lg text-white">经济法题库</span>
+          <span className="font-black text-sm tracking-tight text-white italic">经济法题库</span>
         </div>
-        <div className="flex gap-4">
-            <button onClick={startPractice} className={`p-2 rounded-lg ${view === 'practice' ? 'text-amber-500' : 'text-zinc-500'}`}><BookOpen size={20} /></button>
-            <button onClick={startExam} className={`p-2 rounded-lg ${view === 'exam' ? 'text-amber-500' : 'text-zinc-500'}`}><GraduationCap size={20} /></button>
-            <button onClick={startErrorReview} className={`p-2 rounded-lg relative ${view === 'errors' ? 'text-amber-500' : 'text-zinc-500'}`}>
-              <ClipboardList size={20} />
-              {errorIds.length > 0 && (
-                <span className="absolute top-0 right-0 w-4 h-4 bg-rose-500 text-[8px] font-bold text-white flex items-center justify-center rounded-full border border-zinc-900 leading-none">
+      </header>
+
+      {/* Main Content */}
+      {/* Mobile Navigation (lg:hidden) */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#09090b]/90 backdrop-blur-xl border-t border-zinc-800/50 px-2 sm:px-6 py-3.5 flex items-center justify-around shadow-[0_-8px_30px_rgb(0,0,0,0.12)]">
+        {[
+          { id: 'home', icon: LayoutGrid, label: '首页' },
+          { id: 'practice', icon: BookOpen, label: '刷题' },
+          { id: 'exam', icon: GraduationCap, label: '考试' },
+          { id: 'errors', icon: ClipboardList, label: '错题' },
+          { id: 'settings', icon: Menu, label: '设置' }
+        ].map((item) => {
+          const isActive = (view === item.id || (item.id === 'settings' && isMobileMenuOpen));
+          return (
+            <button
+              key={item.id}
+              onClick={() => {
+                if (item.id === 'settings') {
+                  setIsMobileMenuOpen(!isMobileMenuOpen);
+                } else {
+                  navigateTo(item.id as any);
+                }
+              }}
+              className={`flex flex-col items-center gap-1.5 transition-all duration-300 relative ${
+                isActive ? 'text-amber-500 scale-110' : 'text-zinc-500 hover:text-zinc-300'
+              }`}
+            >
+              <item.icon size={18} className={isActive ? 'drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]' : ''} />
+              <span className={`text-[9px] font-bold tracking-tight ${isActive ? 'opacity-100' : 'opacity-60'}`}>{item.label}</span>
+              {item.id === 'errors' && errorIds.length > 0 && (
+                <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-rose-500 text-[8px] font-black text-white flex items-center justify-center rounded-full ring-2 ring-[#09090b] animate-pulse">
                   {errorIds.length}
                 </span>
               )}
             </button>
-        </div>
+          );
+        })}
       </div>
 
-      {/* Main Content */}
-      <main className="flex-1 flex flex-col relative overflow-hidden">
+      {/* Mobile Settings Drawer */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 100 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 100 }}
+            className="lg:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm flex items-end"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <motion.div 
+              className="w-full bg-[#09090b] border-t border-zinc-800 rounded-t-3xl p-6 pb-24"
+              onClick={e => e.stopPropagation()}
+            >
+              <div className="w-12 h-1.5 bg-zinc-800 rounded-full mx-auto mb-8" />
+              <h3 className="text-sm font-bold text-zinc-500 uppercase tracking-widest mb-6">题型偏好设置</h3>
+              <div className="grid grid-cols-1 gap-3">
+                {[
+                  { type: QuestionType.MULTIPLE_CHOICE, label: '单项选择题' },
+                  { type: QuestionType.FILL_IN, label: '填空题' },
+                  { type: QuestionType.TRUE_FALSE, label: '判断题' }
+                ].map((item) => {
+                  const isActive = selectedTypes.includes(item.type);
+                  return (
+                    <button
+                      key={item.type}
+                      onClick={() => toggleType(item.type)}
+                      className={`flex items-center justify-between px-5 py-4 rounded-2xl border transition-all ${
+                        isActive ? 'bg-amber-500/10 border-amber-500/30 text-white' : 'bg-zinc-900/50 border-zinc-800/50 text-zinc-500'
+                      }`}
+                    >
+                      <span className="font-medium">{item.label}</span>
+                      <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${isActive ? 'bg-amber-500 border-amber-500' : 'border-zinc-700'}`}>
+                        {isActive && <CheckCircle2 size={12} className="text-black stroke-[3]" />}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+              <button 
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="w-full mt-8 py-4 bg-zinc-800 hover:bg-zinc-700 text-white font-bold rounded-2xl transition-colors"
+              >
+                完成设置
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <main className="flex-1 flex flex-col relative overflow-hidden pb-20 lg:pb-0">
         {view !== 'home' && (
-            <header className="h-16 lg:h-20 border-b border-zinc-800 px-6 lg:px-12 flex items-center justify-between bg-[#09090b]/80 backdrop-blur-md z-30 shrink-0">
-                <div className="flex items-center gap-6">
-                    <span className="text-xs lg:text-sm text-zinc-500 font-medium uppercase tracking-widest truncate max-w-[120px] lg:max-w-none">
-                       {view === 'practice' ? '练习模式' : view === 'exam' ? '考试模式' : '错题复习'}
+            <header className="h-16 lg:h-20 border-b border-zinc-800 px-4 lg:px-12 flex items-center justify-between bg-[#09090b]/80 backdrop-blur-md z-30 shrink-0">
+                <div className="flex items-center gap-3 lg:gap-6">
+                    <span className="text-[10px] lg:text-sm text-zinc-500 font-bold uppercase tracking-widest truncate max-w-[80px] lg:max-w-none">
+                       {view === 'practice' ? '练习' : view === 'exam' ? '模拟' : '错题'}
                     </span>
-                    {quizState && !quizState.isFinished && (
+                    {quizState && quizState.questions && !quizState.isFinished && (
                         <>
-                            <span className="w-px h-6 bg-zinc-800"></span>
-                            <div className="flex items-center gap-4 lg:gap-6 shrink-0">
-                                <div className="flex flex-col gap-1.5 justify-center min-w-[100px] lg:min-w-[150px]">
-                                    <div className="flex items-center justify-end">
-                                         <span className="text-xs text-amber-500 font-mono font-bold leading-none">{Math.round(((quizState.currentQuestionIndex + 1) / quizState.questions.length) * 100)}%</span>
+                            <span className="w-px h-6 bg-zinc-800 hidden sm:inline"></span>
+                            <div className="flex items-center gap-2 lg:gap-6 shrink-0">
+                                <div className="flex flex-col gap-1.5 justify-center min-w-[70px] lg:min-w-[150px]">
+                                    <div className="flex items-center justify-between lg:justify-end gap-2">
+                                         <span className="text-[9px] text-zinc-600 font-mono font-bold xs:hidden">
+                                           {quizState.currentQuestionIndex + 1}/{quizState.questions.length}
+                                         </span>
+                                         <span className="text-[10px] text-amber-500 font-mono font-bold leading-none">
+                                            {quizState.questions.length > 0 ? Math.round(((quizState.currentQuestionIndex + 1) / quizState.questions.length) * 100) : 0}%
+                                         </span>
                                     </div>
-                                    <div className="w-full h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+                                    <div className="w-full h-1 lg:h-1.5 bg-zinc-800 rounded-full overflow-hidden">
                                         <motion.div 
-                                            className="h-full bg-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.5)]"
+                                            className="h-full bg-gradient-to-r from-amber-500 to-orange-500 shadow-[0_0_8px_rgba(245,158,11,0.3)]"
                                             initial={{ width: 0 }}
-                                            animate={{ width: `${((quizState.currentQuestionIndex + 1) / quizState.questions.length) * 100}%` }}
+                                            animate={{ width: `${quizState.questions.length > 0 ? ((quizState.currentQuestionIndex + 1) / quizState.questions.length) * 100 : 0}%` }}
                                             transition={{ duration: 0.5, ease: "easeOut" }}
                                         />
                                     </div>
                                 </div>
-                                <span className="text-xs lg:text-sm text-zinc-500 font-mono font-medium hidden sm:inline whitespace-nowrap">
-                                    {quizState.currentQuestionIndex + 1} / {quizState.questions.length}
+                                <span className="text-[10px] lg:text-sm text-zinc-400 font-mono font-medium hidden xs:inline whitespace-nowrap">
+                                    <span className="text-zinc-100">{quizState.currentQuestionIndex + 1}</span> <span className="text-zinc-700 mx-0.5">/</span> {quizState.questions.length}
                                 </span>
                             </div>
                         </>
                     )}
                 </div>
                 
-                <div className="flex items-center gap-4 lg:gap-8">
-                    {view === 'exam' && quizState && !quizState.isFinished && (
+                <div className="flex items-center gap-3 lg:gap-8">
+                    {view === 'exam' && quizState && quizState.questions && !quizState.isFinished && (
                          <>
-                            <div className="flex items-center gap-2 font-mono text-zinc-500 mr-1 lg:mr-2">
-                                <span className="text-[10px] lg:text-xs uppercase tracking-wider">得分:</span>
-                                <span className="text-amber-500 font-bold text-sm lg:text-base">{Object.entries(quizState.userAnswers).reduce((acc, [qid, ans]) => {
-                                    const q = quizState.questions.find(q => q.id === Number(qid));
+                            <div className="flex items-center gap-1.5 font-mono text-zinc-500 mr-1 lg:mr-2">
+                                <span className="text-[9px] lg:text-xs uppercase tracking-wider hidden xs:inline">得分:</span>
+                                <span className="text-amber-500 font-bold text-xs lg:text-base">{Object.entries(quizState.userAnswers).reduce((acc, [qid, ans]) => {
+                                    const q = quizState.questions.find(item => item.id === Number(qid));
+                                    if (q?.type === QuestionType.MULTIPLE_CHOICE) return q.answer === ans ? acc + 2 : acc;
                                     return q?.answer === ans ? acc + 2 : acc;
                                 }, 0)}</span>
                             </div>
-                            <div className={`flex items-center gap-2.5 font-mono font-bold px-4 py-1.5 rounded border ${timeRemaining < 300 ? 'bg-rose-500/10 border-rose-500/30 text-rose-500 animate-pulse' : 'bg-amber-500/5 border-amber-500/20 text-amber-500'}`}>
-                                <Clock size={14} />
-                                <span className="text-sm lg:text-base">{formatTime(timeRemaining)}</span>
+                            <div className={`flex items-center gap-2 font-mono font-bold px-3 py-1 lg:py-1.5 rounded border ${timeRemaining < 300 ? 'bg-rose-500/10 border-rose-500/30 text-rose-500 animate-pulse' : 'bg-amber-500/5 border-amber-500/20 text-amber-500'}`}>
+                                <Clock size={12} className="lg:size-[14px]" />
+                                <span className="text-xs lg:text-base">{formatTime(timeRemaining)}</span>
                             </div>
                          </>
                     )}
                     <button 
-                        onClick={() => setView('home')}
+                        onClick={() => {
+                          setView('home');
+                          setQuizState(null);
+                        }}
                         className="p-2 text-zinc-500 hover:text-white transition-colors"
                     >
-                        <Home size={20} />
+                        <Home size={18} className="lg:size-5" />
                     </button>
                 </div>
             </header>
@@ -665,15 +745,22 @@ export default function App() {
         <div className="flex-1 overflow-y-auto">
             <AnimatePresence mode="wait">
                 <motion.div
-                    key={view + (quizState?.isFinished ? '_finished' : '_running')}
+                    key={view + (quizState?.isFinished ? '_finished' : '_running') + (quizState ? '_hasState' : '_noState')}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.3 }}
                     className="h-full"
                 >
-                    {view === 'home' ? renderHome() : (
-                        quizState?.isFinished ? renderResult() : renderQuestion(quizState!.questions[quizState!.currentQuestionIndex], quizState!)
+                    {view === 'home' ? (
+                      renderHome()
+                    ) : quizState && quizState.questions ? (
+                      quizState.isFinished ? renderResult() : renderQuestion(quizState.questions[quizState.currentQuestionIndex], quizState)
+                    ) : (
+                      <div className="flex-1 h-full flex flex-col items-center justify-center p-12 text-center">
+                        <div className="w-12 h-12 border-4 border-zinc-800 border-t-amber-500 rounded-full animate-spin mb-4" />
+                        <p className="text-zinc-500 text-sm font-medium tracking-widest">正在初始化题库...</p>
+                      </div>
                     )}
                 </motion.div>
             </AnimatePresence>
