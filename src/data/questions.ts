@@ -395,11 +395,11 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 50, type: QuestionType.MULTIPLE_CHOICE,
-    title: "法律责任不包括哪些内容？",
-    options: ["A. 行政责任", "B. 民事责任", "C. 刑事责任", "D. 司法责任"],
-    answer: "D", 
-    explanation: "司法责任通常指的是法院或司法人员在职责范围内的责任，而法律责任包括行政责任、民事责任和刑事责任。",
-    source: "第19页"
+    title: "下列关于法律事实的分类，哪项是正确的？",
+    options: ["A. 法律事实分为法律行为和法律事件", "B. 法律事实仅包括人的意志行为", "C. 法律事实不包括自然灾害", "D. 法律事实仅指法院的判决"],
+    answer: "A", 
+    explanation: "法律事实是法律关系发生的客观情况，通常分为法律行为（有意志）和法律事件（无意志）。",
+    source: "第8页"
   },
   // 填空题 51-100
   {
@@ -558,9 +558,9 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 73, type: QuestionType.FILL_IN,
-    title: "法律责任不包括：A.行政责任 B.刑事责任 C.民事责任 D.__________。",
-    answer: "司法责任",
-    explanation: "司法责任不是法律责任的一部分，法律责任包括行政责任、刑事责任和民事责任。",
+    title: "在法律责任的分类中，除了民事责任和行政责任外，还包括__________责任。",
+    answer: "刑事",
+    explanation: "法律责任通常分为三大类：民事责任、行政责任和刑事责任。",
     source: "第 19 页"
   },
   {

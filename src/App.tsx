@@ -18,6 +18,11 @@ export default function App() {
     const saved = localStorage.getItem('mistake_notebook');
     return saved ? JSON.parse(saved) : [];
   });
+  const [selectedTypes, setSelectedTypes] = useState<QuestionType[]>([
+    QuestionType.MULTIPLE_CHOICE,
+    QuestionType.FILL_IN,
+    QuestionType.TRUE_FALSE
+  ]);
 
   // Save mistakes to localStorage
   useEffect(() => {
@@ -55,8 +60,27 @@ export default function App() {
     }
   };
 
+  const toggleType = (type: QuestionType) => {
+    setSelectedTypes(prev => {
+      if (prev.includes(type)) {
+        if (prev.length === 1) return prev; // Keep at least one
+        return prev.filter(t => t !== type);
+      }
+      return [...prev, type];
+    });
+  };
+
+  const getFilteredQuestions = (source: Question[]) => {
+    return source.filter(q => selectedTypes.includes(q.type));
+  };
+
   const startPractice = () => {
-    const shuffled = [...QUESTIONS].sort(() => Math.random() - 0.5);
+    const filtered = getFilteredQuestions(QUESTIONS);
+    if (filtered.length === 0) {
+      alert("所选题型没有题目哦！");
+      return;
+    }
+    const shuffled = [...filtered].sort(() => Math.random() - 0.5);
     setQuizState({
       currentQuestionIndex: 0,
       questions: shuffled,
@@ -70,7 +94,12 @@ export default function App() {
   };
 
   const startExam = () => {
-    const shuffled = [...QUESTIONS].sort(() => Math.random() - 0.5).slice(0, 50);
+    const filtered = getFilteredQuestions(QUESTIONS);
+    if (filtered.length === 0) {
+      alert("所选题型没有题目哦！");
+      return;
+    }
+    const shuffled = [...filtered].sort(() => Math.random() - 0.5).slice(0, 50);
     setQuizState({
       currentQuestionIndex: 0,
       questions: shuffled,
@@ -86,13 +115,14 @@ export default function App() {
 
   const startErrorReview = () => {
     const errorQuestions = QUESTIONS.filter(q => errorIds.includes(q.id));
-    if (errorQuestions.length === 0) {
-      alert("目前还没有错题收录哦！");
+    const filtered = getFilteredQuestions(errorQuestions);
+    if (filtered.length === 0) {
+      alert("所选题型中没有错题哦！");
       return;
     }
     setQuizState({
       currentQuestionIndex: 0,
-      questions: errorQuestions,
+      questions: filtered,
       userAnswers: {},
       isFinished: false,
       startTime: Date.now(),
@@ -145,8 +175,9 @@ export default function App() {
   };
 
   const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
+    const totalSeconds = Math.floor(seconds);
+    const mins = Math.floor(totalSeconds / 60);
+    const secs = totalSeconds % 60;
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
@@ -239,7 +270,7 @@ export default function App() {
               {q.title}
             </h2>
 
-            <div className="space-y-3 lg:space-y-4">
+                  <div key={q.id} className="space-y-3 lg:space-y-4">
               {q.type === QuestionType.MULTIPLE_CHOICE && q.options?.map((opt) => {
                 const letter = opt.charAt(0);
                 const isSelected = currentAnswer === letter;
@@ -265,7 +296,7 @@ export default function App() {
                 return (
                   <button
                     key={opt}
-                    disabled={isAnswered && (view === 'practice' || view === 'errors')}
+                    disabled={isAnswered}
                     onClick={() => handleAnswerChange(letter)}
                     className={`w-full group flex items-center text-left p-5 rounded-xl border transition-all ${borderStyle} relative`}
                   >
@@ -298,7 +329,7 @@ export default function App() {
                     return (
                       <button
                         key={opt}
-                        disabled={isAnswered && (view === 'practice' || view === 'errors')}
+                        disabled={isAnswered}
                         onClick={() => handleAnswerChange(opt)}
                         className={`text-center p-8 rounded-2xl border transition-all text-4xl font-bold ${borderStyle}`}
                       >
@@ -309,12 +340,13 @@ export default function App() {
                 </div>
               )}
 
-              {q.type === QuestionType.FILL_IN && (
+                  {q.type === QuestionType.FILL_IN && (
                 <div className="space-y-4">
                   <div className="flex gap-4">
                     <input
+                      key={q.id}
                       type="text"
-                      disabled={isAnswered && (view === 'practice' || view === 'errors')}
+                      disabled={isAnswered}
                       placeholder="在此处输入您的答案..."
                       onKeyDown={(e) => {
                         if (e.key === 'Enter') handleAnswerChange((e.target as HTMLInputElement).value.trim());
@@ -518,6 +550,34 @@ export default function App() {
               </button>
             ))}
           </nav>
+
+          <div className="mt-12">
+            <h3 className="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-6 px-5">选择题型</h3>
+            <div className="space-y-2 px-2">
+              {[
+                { type: QuestionType.MULTIPLE_CHOICE, label: '单选题' },
+                { type: QuestionType.FILL_IN, label: '填空题' },
+                { type: QuestionType.TRUE_FALSE, label: '判断题' }
+              ].map((item) => {
+                const isActive = selectedTypes.includes(item.type);
+                return (
+                  <button
+                    key={item.type}
+                    onClick={() => toggleType(item.type)}
+                    className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all border ${isActive ? 'bg-amber-500/5 border-amber-500/20 text-white' : 'bg-transparent border-transparent text-zinc-600 hover:text-zinc-400'}`}
+                  >
+                    <span className="text-sm font-medium">{item.label}</span>
+                    <div className={`w-4 h-4 rounded-full border flex items-center justify-center transition-all ${isActive ? 'bg-amber-500 border-amber-500' : 'border-zinc-800'}`}>
+                      {isActive && <CheckCircle2 size={10} className="text-black stroke-[3]" />}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+            <p className="px-5 mt-4 text-[10px] text-zinc-600 leading-relaxed italic">
+              控制刷题及模拟考试中所包含的题目类型
+            </p>
+          </div>
         </div>
       </aside>
 
