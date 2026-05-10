@@ -960,5 +960,5 @@ export const CHOICE_QUESTIONS: Question[] = [
     answer: "C",
     explanation: "会计职业道德虽然不完全等同法律，但对规范会计行为具有重要作用，是会计人员必须遵守的行为准则。",
     source: "第23页"
-  },
+  }
 ];
