@@ -350,5 +350,180 @@ export const FILL_QUESTIONS: Question[] = [
     answer: "死刑",
     explanation: "死刑是剥夺犯罪分子生命的刑罚，刑罚中最为严厉。",
     source: "第 21 页"
+  },
+  {
+    id: 51, type: QuestionType.FILL_IN,
+    title: "会计法律制度是指国家权力机关和行政机关制定的关于会计工作的法律、规章和规范性文件的总称，是调整__________的法律规范。",
+    answer: "会计关系",
+    explanation: "会计法律制度的本质是调整会计关系，即在办理会计事务和管理会计工作过程中发生的经济关系。",
+    source: "第 2 页"
+  },
+  {
+    id: 52, type: QuestionType.FILL_IN,
+    title: "会计法律制度的调整对象是__________在办理会计事务过程中发生的经济关系。",
+    answer: "会计机构和会计人员",
+    explanation: "主体是会计机构和人员，客体是与会计工作相关的具体事务。",
+    source: "第 2 页"
+  },
+  {
+    id: 53, type: QuestionType.FILL_IN,
+    title: "《中华人民共和国会计法》的制定机关是__________。",
+    answer: "全国人大常委会",
+    explanation: "《会计法》属于“法律”层级，由全国人大常委会制定，是会计法律制度中层次最高的法律规范。",
+    source: "第 2 页"
+  },
+  {
+    id: 54, type: QuestionType.FILL_IN,
+    title: "《总会计师条例》和《企业财务会计报告条例》属于会计法律制度中的__________。",
+    answer: "行政法规",
+    explanation: "由国务院制定并发布，名称通常带有“条例”二字。",
+    source: "第 2 页"
+  },
+  {
+    id: 55, type: QuestionType.FILL_IN,
+    title: "《代理记账管理办法》和《会计人员管理办法》是由__________制定的部门规章。",
+    answer: "财政部",
+    explanation: "财政部作为主管全国会计工作的部门，有权制定相关的部门规章。",
+    source: "第 2 页"
+  },
+  {
+    id: 56, type: QuestionType.FILL_IN,
+    title: "我国会计工作管理体制规定，__________主管全国的会计工作。",
+    answer: "国务院财政部门",
+    explanation: "坚持“统一领导、分级管理”，中央由财政部统一负责。",
+    source: "第 3 页"
+  },
+  {
+    id: 57, type: QuestionType.FILL_IN,
+    title: "__________对本单位的会计工作和会计资料的真实性、完整性负责。",
+    answer: "单位负责人",
+    explanation: "单位负责人是单位的法律责任主体，必须确保会计资料不造假。",
+    source: "第 3 页"
+  },
+  {
+    id: 58, type: QuestionType.FILL_IN,
+    title: "单位负责人不得__________、指使、强令会计机构、会计人员违法办理会计事项。",
+    answer: "授意",
+    explanation: "法律严禁单位负责人干预正常的会计工作秩序。",
+    source: "第 3 页"
+  },
+  {
+    id: 59, type: QuestionType.FILL_IN,
+    title: "会计资料的__________和__________，是会计资料最基本的质量要求。",
+    answer: "真实性和完整性",
+    explanation: "真实是指如实反映，完整是指不得隐瞒或漏报。",
+    source: "第 4 页"
+  },
+  {
+    id: 60, type: QuestionType.FILL_IN,
+    title: "以虚假的经济业务为前提来编制会计凭证和会计账簿，属于__________行为。",
+    answer: "伪造",
+    explanation: "“以假充真”为伪造；“涂改歪曲”为变造。",
+    source: "第 4 页"
+  },
+  {
+    id: 61, type: QuestionType.FILL_IN,
+    title: "各单位采用的会计处理方法，前后各期应当一致，不得__________。",
+    answer: "随意变更",
+    explanation: "符合可比性原则，确需变更的应按规定并在报告中说明原因。",
+    source: "第 4 页"
+  },
+  {
+    id: 62, type: QuestionType.FILL_IN,
+    title: "会计记录的文字应当使用__________。",
+    answer: "中文",
+    explanation: "中文是基本文字，民族自治地方和外资企业可以同时使用另一种文字。",
+    source: "第 4 页"
+  },
+  {
+    id: 63, type: QuestionType.FILL_IN,
+    title: "我国以__________年度为会计年度，即公历1月1日起至12月31日止。",
+    answer: "公历",
+    explanation: "会计年度是法定的，企业不能自行选定起止日期。",
+    source: "第 4 页"
+  },
+  {
+    id: 64, type: QuestionType.FILL_IN,
+    title: "会计核算以__________为记账本位币。",
+    answer: "人民币",
+    explanation: "外币为主的单位可任选一种外币，但编报报告时必须折算为人民币。",
+    source: "第 6 页"
+  },
+  {
+    id: 65, type: QuestionType.FILL_IN,
+    title: "会计核算的内容包括资产、负债、所有者权益、收入、费用和__________。",
+    answer: "财务成果（利润）",
+    explanation: "这些是引起资金运动的经济业务事项。",
+    source: "第 6 页"
+  },
+  {
+    id: 66, type: QuestionType.FILL_IN,
+    title: "原始凭证金额有错误的，应当由出具单位__________，不得在原始凭证上更正。",
+    answer: "重开",
+    explanation: "金额是核心要素，为了防止造假，法律规定金额错误只能重开，不能涂改盖章。",
+    source: "第 7 页"
+  },
+  {
+    id: 67, type: QuestionType.FILL_IN,
+    title: "对于不真实、不合法的原始凭证，会计人员有权__________，并向单位负责人报告。",
+    answer: "不予接受",
+    explanation: "这是会计人员行使监督职权的重要体现。",
+    source: "第 7 页"
+  },
+  {
+    id: 68, type: QuestionType.FILL_IN,
+    title: "原始凭证不得__________，如因特殊原因需使用，经批准后可以复制。",
+    answer: "外借",
+    explanation: "为了保证凭证安全和完整。",
+    source: "第 8 页"
+  },
+  {
+    id: 69, type: QuestionType.FILL_IN,
+    title: "除__________和__________外，记账凭证必须附有原始凭证。",
+    answer: "结账和更正错误",
+    explanation: "结账和调账通常没有单独的外部原始凭证。",
+    source: "第 8 页"
+  },
+  {
+    id: 70, type: QuestionType.FILL_IN,
+    title: "实行会计电算化的单位，在机制记账凭证上签章的人员不包括__________。",
+    answer: "单位负责人",
+    explanation: "机制凭证只需制单、审核、记账及会计机构负责人签章。",
+    source: "第 8 页"
+  },
+  {
+    id: 71, type: QuestionType.FILL_IN,
+    title: "__________必须采用订本式账簿。",
+    answer: "日记账",
+    explanation: "为防止账页抽换，现金和银行存款日记账必须装订成册。",
+    source: "第 9 页"
+  },
+  {
+    id: 72, type: QuestionType.FILL_IN,
+    title: "账务核对包括账账核对、账证核对、__________和账表核对。",
+    answer: "账实核对",
+    explanation: "账实核对是指会计账簿记录与实有数额核对。",
+    source: "第 10 页"
+  },
+  {
+    id: 73, type: QuestionType.FILL_IN,
+    title: "银行存款日记账与银行对账单的核对属于__________。",
+    answer: "账实核对",
+    explanation": "银行对账单不是企业的账簿，而是外部证明材料。",
+    source: "第 11 页"
+  },
+  {
+    id: 74, type: QuestionType.FILL_IN,
+    title: "年度终了结账时，要把各账户的__________结转到下一会计年度。",
+    answer: "余额",
+    explanation": "注意不是“发生额”，而是期末剩下的数额。",
+    source: "第 11 页"
+  },
+  {
+    id: 75, type: QuestionType.FILL_IN,
+    title: "季度、月度财务会计报告通常仅包括__________。",
+    answer: "会计报表",
+    explanation": "包括资产负债表和利润表。",
+    source: "第 11 页"
   }
 ];
